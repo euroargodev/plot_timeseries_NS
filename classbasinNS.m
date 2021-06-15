@@ -5,12 +5,13 @@ function [gs,ip,lb,nb]=classbasinNS(data)
 %% find profiles in each basin
 %GS: 
 gs=find(data.lat>73.35 & data.lat<77 & data.f_h<=0.045);
-
+gs_excl=union(find(data.lat>75&data.long>-0.02),find(data.long>4));
+gs=setdiff(gs,gs_excl);
 %IP:
 ip=find(data.lat>67 & data.lat<=68.1 & data.long<-8.5 & data.f_h<=0.079 | ...
         data.lat>68.1 & data.lat<68.3 & data.long<-9.4 & data.f_h<=0.079 | ...
         data.lat>=68.3 & data.lat<70.5 & data.long<-8.5 & data.f_h<=0.079 );
-
+ip=intersect(ip,find(data.long>-15));
 %LB: 
 lb=find(data.lat>=70 & data.lat<=72 & data.long>=-2 & data.long<=10.1 & data.f_h<=0.045 | ...
         data.lat>=69.7 & data.lat<70 & data.long>=-1.5 & data.long<=10.1 & data.f_h<=0.045 | ...
