@@ -12,3 +12,6 @@ H=-H;
 fh=f./H*1e6;
 data.long=long_f;data.lat=lat_f;data.f_h=fh;data.H=H;
 [gs,ip,lb,nb]=classbasinNS(data);
+%
+basins=nan(size(data.long));
+basins(gs)=1;basins(ip)=2;basins(lb)=3;basins(nb)=4;
