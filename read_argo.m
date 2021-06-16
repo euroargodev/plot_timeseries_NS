@@ -28,6 +28,10 @@ lat = netcdf.getVar(ncid,varid,'double')';
 varid    = netcdf.inqVarID(ncid,'LONGITUDE');
 long = netcdf.getVar(ncid,varid,'double')';
 
+% Read profiles cycle:
+varid    = netcdf.inqVarID(ncid,'CYCLE_NUMBER');
+cycle = netcdf.getVar(ncid,varid,'double');
+
 % Read profiles pressure:
 varid    = netcdf.inqVarID(ncid,'PRES');
 pres = netcdf.getVar(ncid,varid,'double');
@@ -65,6 +69,22 @@ pres(flag)=NaN;
 temp(flag)=NaN;
 sal(flag)=NaN;
 
+%invalid profiles (bad quality)
+f=find(min(flag,[],1)==1);
+if isempty(f)==0
+    disp([num2str(numel(f)) ' cycles will be excluded because do not satisfy'...
+        ' the QF requirements (QF for pres, temp and/or sal for is lager than 1 in all samples ' ])
+    cycle(f)=[];
+    long(f)=[];
+    lat(f)=[];
+    daten(f)=[];
+    pres(:,f)=[];
+    temp(:,f)=[];
+    sal(:,f)=[];
+end
+
+
+data.cycle=cycle;
 data.long=long;
 data.lat=lat;
 data.daten=daten;

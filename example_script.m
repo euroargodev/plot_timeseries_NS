@@ -16,8 +16,8 @@ ctdrdb_path='\\win.bsh.de\root$\Standard\Hamburg\Homes\Homes00\bm2286\Datenbanke
 %matfiles
 %plot_timeseries_prep(ipres,ctdrdb_path)
 
-%load interp_ctdrdb_NS.mat
-%load interp_fh_NS
+load interp_ctdrdb_NS.mat
+load interp_fh_NS
 
  %% INPUT 2
 % WMO number
@@ -28,7 +28,7 @@ path_float='\\win.bsh.de\root$\Standard\Hamburg\Homes\Homes00\bm2286\CTD-RDB-DMQ
 % read data
 nfile=[path_float '\' num2str(float) '_prof.nc'];
 data=read_argo(nfile);
-[data.itemp,data.isal]=interp_profile_ipres(data.pres,data.temp,data.sal,ipres);
+[data.itemp,data.isal]=interp_profile_ipres(data.pres,data.temp,data.sal,data.cycle,ipres);
 
 % sort by time
 [B,I] = sort(data.daten);  

@@ -8,13 +8,13 @@
 % Last update: 09.10.2019
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function [itemp,isal]=interp_profile_ipres(pres,temp,sal,ipres)
+function [itemp,isal]=interp_profile_ipres(pres,temp,sal,cycle,ipres)
 % preallocate output
 n=size(temp,2);
 itemp=nan(numel(ipres),n);
 isal=itemp;nan(numel(ipres),n);
 % loop for profiles
-for i=1:n
+for i=1:n    
     %finds 
     % unique pressure values
     [~,ix1] = unique(pres(:,i));
@@ -24,7 +24,11 @@ for i=1:n
     ix=intersect(ix1,ix2);
     % interpolating
     if isempty(ix)==0
-    itemp(:,i)=interp1(pres(ix,i),temp(ix,i),ipres');
-    isal(:,i)=interp1(pres(ix,i),sal(ix,i),ipres');
+        if numel(ix)==1
+           disp(['Cycle number ' num2str(cycle(i)) ' has been skipped. Not enough interpolation points.'])
+        else
+            itemp(:,i)=interp1(pres(ix,i),temp(ix,i),ipres');
+            isal(:,i)=interp1(pres(ix,i),sal(ix,i),ipres');
+        end
     end
 end
