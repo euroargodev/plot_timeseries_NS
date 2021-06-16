@@ -41,7 +41,7 @@ data.f_h=interp_fh(data.long,data.lat);
 plot_classfloatprof(data,gs,ip,lb,nb)
 
 %% INPUTS2 for plot
-preslevel=1000;
+preslevel=1500;
 year=2010;
 
 % ploat each basin
