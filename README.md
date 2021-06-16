@@ -5,10 +5,10 @@ This is an auxiliary DMQC procedure.
 
 ## Observations
 
-*Basins Definitions: *
+*Basins Definitions:*
 The definition of the basins is highly dependent on the bathymetry. They should be improved (See Greenland Sea, which still has a part from a neighbor basin).
 
-*QF filtering: *
+*QF filtering:*
 By default the script read_argo assigns a NaN value to all measured variables of a sample (P,T,S) if on of them has a QF>1.
 
 ## Requirements
