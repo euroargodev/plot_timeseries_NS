@@ -74,6 +74,7 @@ f=find(min(flag,[],1)==1);
 if isempty(f)==0
     disp([num2str(numel(f)) ' cycles will be excluded because do not satisfy'...
         ' the QF requirements (QF for pres, temp and/or sal for is lager than 1 in all samples ' ])
+    disp(['The deleted cycles are stored in data.Fexcl_cycle'])
     % store full
     data.Fcycle=cycle;
     data.Flong=long;
@@ -82,6 +83,8 @@ if isempty(f)==0
     data.Fpres=pres;
     data.Ftemp=temp;
     data.Fsal=sal;
+    data.Fexcl=f;
+    data.Fexcl_cycle=cycle(f);
     % delete
     cycle(f)=[];
     long(f)=[];

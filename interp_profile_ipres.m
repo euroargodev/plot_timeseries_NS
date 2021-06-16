@@ -25,6 +25,7 @@ for i=1:n
     % interpolating
     if isempty(ix)==0
         if numel(ix)==1
+            disp('')
            disp(['Cycle number ' num2str(cycle(i)) ' has been skipped. Not enough interpolation points.'])
         else
             itemp(:,i)=interp1(pres(ix,i),temp(ix,i),ipres');
