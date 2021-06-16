@@ -21,20 +21,19 @@ load interp_fh_NS
 
  %% INPUT 2
 % WMO number
-float=3901873 ;
+float=3901872 ;
 % path for the netcdf file
 path_float='\\win.bsh.de\root$\Standard\Hamburg\Homes\Homes00\bm2286\CTD-RDB-DMQC\CTDRD_improved\argo\';
-disp('')
-disp(['Reading data from float WMO number ' num2str(float)])
+disp(' ')
+disp(['*Reading data from float WMO number ' num2str(float) '*'])
 
 % read data
 nfile=[path_float '\' num2str(float) '_prof.nc'];
 
 data=read_argo(nfile);
 
-disp('')
-disp(['Interpolating float data to the desired pressure levels... '])
-disp('')
+disp('...')
+disp(['*Interpolating float data to the desired pressure levels*'])
 [data.itemp,data.isal]=interp_profile_ipres(data.pres,data.temp,data.sal,data.cycle,ipres);
 
 % sort by time
@@ -51,9 +50,8 @@ plot_classfloatprof(data,gs,ip,lb,nb)
 preslevel=1000;
 year=2010;
 
-disp('')
-disp('Plotting timeseries for each basin')
-disp('')
+disp('...')
+disp('*Plotting timeseries for each basin*')
 
 % ploat each basin
 plot_eachbasinprof(preslevel,year,ipres,data,gs,ip,lb,nb)
