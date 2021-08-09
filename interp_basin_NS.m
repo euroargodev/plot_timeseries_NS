@@ -1,18 +1,24 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% iboxes 
-% Interpolates v2 boxes data to standard pressure levels using the function
-% interp_ipres% 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function  [gs_int,ip_int,lb_int,nb_int]=interp_basin_NS(indir,ipres)
+% interpolates the reference profiles for DMQC in the Nordic Seas, 
+% which are contained in the following WMO  boxes 
 wmo=[1600   1601    1700	1701		1800	1801	1802	7600 ...	
      7601    7602   7700    7701        7800    7801   ];%1702 7702 7802
-%indir='\\win.bsh.de\root$\Standard\Hamburg\Homes\Homes00\bm2286\Datenbanken\Downloaded\IFREMER\CTD_for_DMQC_2021V01\';
- % Pressure levels for DMQC
-%ipres=800:10:2000;
+%INPUTS
+% The matfiles for those wmo boxes are located in the INDIR directory
+% and the date is interpolated into the IPRES pressure levels 
+% OUTPUTS
+% data structures named BASIN_int (gs_int,ip_int,lb_int,nb_int, see
+% function interp_fh_NS)
+% that contained the reference profiles in that basin iterpolated to the
+% IPRES levels and sorted chronologically
+% contents: data.itemp, data.isal, data.ipres, data.dates, data.long and data.lat
+% 
+%%
+% fix pressure to column vector
 if size(ipres,1)==1
    ipres=ipres';
 end
-%%
+
 disp('Sorting profiles of each WMO box into the corresponding basin')
 for j=1:numel(wmo)
     disp([ 'WMO box ' num2str(j)])
