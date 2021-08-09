@@ -1,12 +1,30 @@
 function [gs,ip,lb,nb]=classbasinNS(data)
+% This function classifies the profiles in the structure data [descirbed as
+% their latitude (lat), longitude (long) and f/h (f_h)] into the four deep
+% basins in the Nordic Seas
+% Input: DATA (structure containing data.lat, data.long and data.f_h)
+% Output: Indices of the profiles corresponding to the
+%         GS (Greenland Sea), IP (Island Sea), LF (Lofoten Basin),
+%         NB (Norwegian Basin)
+% The basins are defined throug a combination of lon/lat limits, f/h limits
+% and a detailed polygon used to avoid false classifications that happened
+% when only the two criteria above were used.
 %% fix long
  data.long=convertlon(data.long,180);
 
 %% find profiles in each basin
 %GS: 
 gs=find(data.lat>73.35 & data.lat<77 & data.f_h<=0.045);
-gs_excl=union(find(data.lat>75&data.long>-0.02),find(data.long>4));
-gs=setdiff(gs,gs_excl);
+% more precise area definition ("hand-made" polygon)
+lo_gs=[-4.0590   -2.8545   -2.5157   -1.6876   -0.7842   -0.1443    0.6838    1.3237    1.2484    2.0389    3.0176    4.1844...
+        4.7867    5.9912    7.0452    6.9699    4.7491    2.8670    1.7001   -2.6662   -4.8871   -7.2208   -8.2748  -10.6838...
+        -14.0339  -16.7817  -13.5445   -7.4843   -4.4354   -4.4354   -4.4354   -4.3977   -4.3977   -4.3977   -4.3977   -4.0590];
+la_gs=[ 77.0546   76.7486   76.7486   76.3989   76.0929   75.8743   75.4809   75.2186   75.3060   75.0000   74.8689   74.8251 ...
+   74.5628   73.9508   74.2131   73.4699   72.9891   72.6831   72.5519   71.8087   71.3279   71.3279   71.1967   71.0656...
+   71.4590   72.5519   75.1749   76.7923   77.2732   77.2732   77.1858   77.0984   77.0984   77.1421   77.1421   77.0546];
+gs2=find(inpolygon(data.long,data.lat,lo_gs,la_gs)==1);
+gs=intersect(gs,gs2);
+
 %IP:
 ip=find(data.lat>67 & data.lat<=68.1 & data.long<-8.5 & data.f_h<=0.079 | ...
         data.lat>68.1 & data.lat<68.3 & data.long<-9.4 & data.f_h<=0.079 | ...
@@ -17,9 +35,25 @@ lb=find(data.lat>=70 & data.lat<=72 & data.long>=-2 & data.long<=10.1 & data.f_h
         data.lat>=69.7 & data.lat<70 & data.long>=-1.5 & data.long<=10.1 & data.f_h<=0.045 | ...
         data.lat>=68.7 & data.lat<69.7 & data.long>=-0.5 & data.long<=10.1 & data.f_h<=0.045 | ...
         data.lat>=68 & data.lat<68.7 & data.long>=1.3 & data.long<=10.1 & data.f_h<=0.045 );
-
+% more precise area definition ("hand-made" polygon)
+lo_lb=[-1.4696   -1.6643   -1.9077   -2.0862   -2.4594   -2.3458   -1.7617   -1.7617   -1.7130   -1.3885   -1.3560   -0.5934 ...
+       0.2016    0.9804    1.9702    4.7447    7.9086    9.5798    9.4014    7.2109    2.7003    0.2340   -0.8206   -1.2100 ...
+       -1.2100   -1.2100];   
+la_lb=[69.7787   69.8505   69.9939   70.0537   70.1554   70.4363   70.5260   70.6635   70.7412   70.7831   70.9624   71.0342 ...
+       71.1418   71.2434   71.8114   71.8114   70.8070   69.2108   68.8043   68.6070   68.5173   68.9597   69.2646   69.7488 ...
+       69.7488   69.7488];
+lb2=find(inpolygon(data.long,data.lat,lo_lb,la_lb)==1);
+lb=intersect(lb,lb2);
+   
 %NB: 
 nb=find(data.lat>=70 & data.lat<=70.4 & data.long>=-7.7 & data.long<=-2 & data.f_h<=0.045 | ...
         data.lat>=69.7 & data.lat<70 & data.long>=-7.7 & data.long<=-1.5 & data.f_h<=0.045 | ...
         data.lat>=68.7 & data.lat<69.7 & data.long>=-7.7 & data.long<=-1 & data.f_h<=0.045 | ...
         data.lat>=63.3 & data.lat <68.7 & data.long >=-7.7 & data.long <=1.3 & data.f_h<=0.045);
+% more precise area definition ("hand-made" polygon)
+lo_nb=[-1.4420   -1.1741   -0.7992    1.5933    1.9861    2.3432    2.7538   -3.3881   -6.5662   -6.9411   -6.7447   -6.5126, ...
+   -4.5843   -3.4774   -2.0133   -1.7990   -1.6562   -1.6562   -1.6562   -1.6562   -1.4420   -1.4420   -1.4598];
+la_nb=[69.7660   69.7303   69.2661   68.0877   66.9093   66.5343   64.9453   63.2848   63.5884   65.5345   65.8737   70.2302,...
+   70.5694   70.3195   70.0695   69.9624   69.8374   69.8374   69.8374   69.8374   69.7838   69.7838   69.7838];
+nb2=find(inpolygon(data.long,data.lat,lo_nb,la_nb)==1);
+nb=intersect(nb,nb2);
