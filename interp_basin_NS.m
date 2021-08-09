@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % iboxes 
 % Interpolates v2 boxes data to standard pressure levels using the function
-% interp_profile_ipres% 
+% interp_ipres% 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function  [gs_int,ip_int,lb_int,nb_int]=interp_basin_NS(indir,ipres)
 wmo=[1600   1601    1700	1701		1800	1801	1802	7600 ...	
@@ -38,7 +38,7 @@ for i=1:numel(basins)
        fname=[indir 'ctd_' num2str(wmo(j))];       
        if isempty(prof{j})==0
           tmp=extr_prof(fname,prof{j});
-          [temp,sal]=interp_profile_ipres(tmp.pres,tmp.temp,tmp.sal,ipres);
+          [temp,sal]=interp_ipres(tmp.pres,tmp.temp,tmp.sal,ipres);
           long=[long tmp.long];
           lat=[lat tmp.lat];
           dates=[dates tmp.dates];
