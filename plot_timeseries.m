@@ -1,4 +1,4 @@
-function plot_timeseries(preslevel,year,basin,float,basin_name)
+function nplot=plot_timeseries(preslevel,year,basin,float,mode,basin_name)
 year=10000000000*year;
 
 basin.daten=dates2daten(basin.dates);
@@ -23,8 +23,23 @@ float.dates=daten2dates(float.daten);
 
 pr=find(float.ipres==preslevel);
 f=find(float.dates>year);
-plot(float.daten(f),float.isal(pr,f),'ok','MarkerSize',6,'MarkerFaceColor','k')
 
+if strcmp(mode,'r')
+   plot(float.daten(f),float.isalr(pr,f),'ok','MarkerSize',6,'MarkerFaceColor','k')
+   f2=intersect(f,find(float.isalr_flag(pr,:)==2));% flag 2
+   plot(float.daten(f2),float.isalr(pr,f2),'+w','MarkerSize',4)
+   f3=intersect(f,find(float.isalr_flag(pr,:)==3));% flag 3
+   plot(float.daten(f3),float.isalr(pr,f3),'*w','MarkerSize',4)
+   nplot=[sum(isfinite(float.isalr(pr,f))) sum(isfinite(float.isalr(pr,f2))) sum(isfinite(float.isalr(pr,f3)))];
+elseif strcmp(mode,'d')
+   plot(float.daten(f),float.isald(pr,f),'ok','MarkerSize',6,'MarkerFaceColor','k')
+   f2=intersect(f,find(float.isald_flag(pr,:)==2));% flag 2
+   plot(float.daten(f2),float.isald(pr,f2),'+w','MarkerSize',4)
+   f3=intersect(f,find(float.isald_flag(pr,:)==3));% flag 3
+   plot(float.daten(f3),float.isald(pr,f3),'*w','MarkerSize',4)
+   nplot=[sum(isfinite(float.isald(pr,f))) sum(isfinite(float.isald(pr,f2))) sum(isfinite(float.isald(pr,f3)))];
+end
+    
 grid on
 datetick('x','yyyy','keeplimits')
 legend('Basin','Float','Location','northoutside','Orientation','horizontal')
