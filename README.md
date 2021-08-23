@@ -1,26 +1,25 @@
 # plot_timeseries_NS
 
-This repository contatins scripts to plot timeseries of interpolated salinity (given pressure levels) from the CTD-RDB in the four deep basins in the Nordic Seas to compare them with the timeseries from an Argo float.
-This is an auxiliary DMQC procedure.
+This repositiory contain scripts for an auxiliary DMQC step for checking the quality of the salinity measurements delivered by Argo Floats operating in the Nordic Seas. This method is complementary to the OWC toolbox: https://github.com/ArgoDMQC/matlab_owc.
+
+The scripts plot timeseries of interpolated salinity at given pressure level(s) from two sources: the ship-born CTD reference data base (CTD-RDB) and a given Argo float. The plots show the data separated in the four deep basins of the Nordic Seas (NS).  
+
 
 ## Observations
 
 *Basins Definitions:*
-The definition of the basins is highly dependent on the bathymetry. They should be improved (See Greenland Sea, which still has a part from a neighbor basin).
+The definition of the basins is highly dependent on the bathymetry. The repository includes definitions based on the etopo2 database but also scripts for define them based on user defined bathymetry.
 
-*QF filtering:*
-By default the script read_argo assigns a NaN value to all measured variables of a sample (P,T,S) if on of them has a QF>1.
+*Modes and QF filtering:*
+The user can define if the scripts plot the delayed mode or real time (includes automatically adjusted data) and the selected quality flags (applied only to salinity and pressure). The default selection is of data with flags 1 (good data), 2 (probably good data) and 3 (probably bad data).
 
 ## Requirements
 
+- GSW toolbox's gsw_f function (calculates the Coriolis parameter)
 - Ingrid Angel's utility functions
   https://github.com/imab4bsh/imab
 - m_map with bathymetries
-	https://www.eoas.ubc.ca/~rich/map.html
-- GSW toolbox's gsw_f function (calculates the Coriolis parameter)
-- export_fig to save figures (optional)
-	https://github.com/altmany/export_fig
-	https://www.mathworks.com/matlabcentral/fileexchange/23629-export_fig
+  https://www.eoas.ubc.ca/~rich/map.html
 
 ## Funding
 
