@@ -25,7 +25,7 @@ The user wishes can also use another reference database (see function interp_bas
 
 The netcdf file for the float(s) that are to be ploted should be locally saved and refered to using their WMO number (float) and their path (path_float). The data is read and then classify into the NS basins.
 
-Finally the function plot_classfloatprof returns a figure showing the profile positions and their classification, and plot_eachbasinprof plots a timeseries (for each basin) of both the reference and argo data in the user defined pressure level.
+Finally the function plot_classfloatprof returns a figure showing the profile positions and their classification, and plot_eachbasinprof plots a timeseries (for each basin) of both the reference and argo data in the user defined pressure level. See the wikipage for examples.
 
 ## Requirements
 
