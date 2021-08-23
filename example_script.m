@@ -10,12 +10,13 @@ ctdrdb_path='\\win.bsh.de\root$\Standard\Hamburg\Homes\Homes00\bm2286\Datenbanke
 
 % Preparing data from reference database
 % this step can be run once (it takes a while) and afterwards just call the
-%  matfiles 
-%  A zip file with the outputs of this function is provided in the
+% matfiles 
+% A zip file with the outputs of this function is provided in the
 % repository (using the CTD-RDB v2021 and ETOPO2 bathymetry) but the user 
 % should repeat this step if they wish to define the basins using another
 % reference database (see function interp_basin_NS)or another
 % bathymetry database (see function interp_fh_NS).
+
 %prep_interp_data(ctdrdb_path,ipres,1)
 
 load interp_ctdrdb_NS.mat

@@ -11,7 +11,7 @@ function prep_interp_data(ctdrdb_path,ipres,pl)
 % IPRES: desired pressure levels for interpolation of the reference 
 % database profiles interpolation
 % CTDRDB_PATH: path to the CTD reference database for argo dmqc
-% PL: write 1 if you want to save the plot (as png) showing the classification
+% PL (optional): write 1 if you want to save the plot (as png) showing the classification
 % of the reference profiles into the basins 
 
 % OUTPUT
@@ -29,6 +29,8 @@ if nargin==0
 elseif nargin==1
     ipres=800:50:2000;
     disp('Using the default pressure levels from 800 to 2000db with 50db resolution')
+    pl=1;
+elseif nargin==2
     pl=1;
 end
 
