@@ -6,7 +6,7 @@ function data=extr_prof(filein,ind)
 % Author: Ingrid M. Angel-Benavides
 %         BSH - MOCCA/EA-Rise (Euro-Argo)
 %        (ingrid.angel@bsh.de)
-% Last update: 09.10.2019
+% Last update: 08.2021
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 var_list=whos('-file',filein);
