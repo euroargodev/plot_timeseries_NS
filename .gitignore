@@ -1,0 +1,15 @@
+# subdirectories
+*/*
+
+# mat extensions
+*.mat
+
+# zip extensions
+*.zip
+
+# Netcdf extensions
+*.nc
+
+# images
+*.png
+*.gif
