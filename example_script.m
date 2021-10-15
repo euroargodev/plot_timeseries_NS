@@ -25,9 +25,9 @@ load interp_fh_NS
 
  %% INPUT 2
 % WMO number
-float=3901872 ;
+float=3901875;
 % path for the netcdf file
-path_float='\\win.bsh.de\root$\Standard\Hamburg\Homes\Homes00\bm2286\CTD-RDB-DMQC\CTDRD_improved\argo\';
+path_float='.\';
 disp(' ')
 disp(['*Reading data from float WMO number ' num2str(float) '*'])
 

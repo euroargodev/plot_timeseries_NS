@@ -25,23 +25,35 @@ pr=find(float.ipres==preslevel);
 f=find(float.dates>year);
 
 if strcmp(mode,'r')
-   plot(float.daten(f),float.isalr(pr,f),'ok','MarkerSize',6,'MarkerFaceColor','k')
-   f2=intersect(f,find(float.isalr_flag(pr,:)==2));% flag 2
-   plot(float.daten(f2),float.isalr(pr,f2),'+w','MarkerSize',3)
-   f3=intersect(f,find(float.isalr_flag(pr,:)==3));% flag 3
-   plot(float.daten(f3),float.isalr(pr,f3),'*w','MarkerSize',3)
-   nplot=[sum(isfinite(float.isalr(pr,f))) sum(isfinite(float.isalr(pr,f2))) sum(isfinite(float.isalr(pr,f3)))];
+    plot(float.daten(f),float.isalr(pr,f),'ok','MarkerSize',6,'MarkerFaceColor','k')
+    f2=intersect(f,find(float.isalr_flag(pr,:)==2));% flag 2
+    plot(float.daten(f2),float.isalr(pr,f2),'+w','MarkerSize',3)
+    f3=intersect(f,find(float.isalr_flag(pr,:)==3));% flag 3
+    plot(float.daten(f3),float.isalr(pr,f3),'*w','MarkerSize',3)
+    nplot=[sum(isfinite(float.isalr(pr,f))) sum(isfinite(float.isalr(pr,f2))) sum(isfinite(float.isalr(pr,f3)))];
 elseif strcmp(mode,'d')
-   plot(float.daten(f),float.isald(pr,f),'ok','MarkerSize',6,'MarkerFaceColor','k')
-   f2=intersect(f,find(float.isald_flag(pr,:)==2));% flag 2
-   plot(float.daten(f2),float.isald(pr,f2),'+w','MarkerSize',3)
-   f3=intersect(f,find(float.isald_flag(pr,:)==3));% flag 3
-   plot(float.daten(f3),float.isald(pr,f3),'*w','MarkerSize',3)
-   nplot=[sum(isfinite(float.isald(pr,f))) sum(isfinite(float.isald(pr,f2))) sum(isfinite(float.isald(pr,f3)))];
-end
+    plot(float.daten(f),float.isald(pr,f),'ok','MarkerSize',6,'MarkerFaceColor','k')
+    f2=intersect(f,find(float.isald_flag(pr,:)==2));% flag 2
+    plot(float.daten(f2),float.isald(pr,f2),'+w','MarkerSize',3)
+    f3=intersect(f,find(float.isald_flag(pr,:)==3));% flag 3
+    plot(float.daten(f3),float.isald(pr,f3),'*w','MarkerSize',3)
+    nplot=[sum(isfinite(float.isald(pr,f))) sum(isfinite(float.isald(pr,f2))) sum(isfinite(float.isald(pr,f3)))];
     
+    if isempty(find(abs(float.isalr(pr,f)-float.isald(pr,f))>0, 1))==0
+        plot(float.daten(f),float.isalr(pr,f),'ok','MarkerSize',6,'MarkerFaceColor','r')
+        f2=intersect(f,find(float.isalr_flag(pr,:)==2));% flag 2
+        plot(float.daten(f2),float.isalr(pr,f2),'+w','MarkerSize',3)
+        f3=intersect(f,find(float.isalr_flag(pr,:)==3));% flag 3
+        plot(float.daten(f3),float.isalr(pr,f3),'*w','MarkerSize',3)
+    end
+end
+
 grid on
 datetick('x','yyyy','keeplimits')
-legend('Basin','Float','Location','northoutside','Orientation','horizontal')
+if isempty(find(abs(float.isalr(pr,f)-float.isald(pr,f))>0, 1))==0
+    legend('Basin','Float','Float in R mode','Location','northoutside','Orientation','horizontal')
+else
+    legend('Basin','Float','Location','northoutside','Orientation','horizontal')
+end
 xx=xlim;yy=ylim;
 set(findall(gcf,'-property','FontSize'),'FontSize',12)
