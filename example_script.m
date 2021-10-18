@@ -53,6 +53,7 @@ data.f_h=interp_fh(data.long,data.lat);
 % plot floats 
 figure('color','w','position',[103   42   1151    576])
 plot_classfloatprof(data,gs,ip,lb,nb)
+saveas(gcf, ['classifiedprofs_' num2str(float) '.png'])
 % 
 %% INPUTS2 for plot
 preslevel=1000;
@@ -62,6 +63,13 @@ year=2010;
 disp('...')
 disp('*Plotting timeseries for each basin*')
 
-% ploat each basin
+% ploat all basins
 plot_eachbasinprof(preslevel,year,ipres,data,'r',gs,ip,lb,nb)
 plot_eachbasinprof(preslevel,year,ipres,data,'d',gs,ip,lb,nb)
+
+% plot only ip basin
+z=zeros(size(gs));% creates empty indices that are used below
+plot_eachbasinprof(preslevel,year,ipres,data,'r',z,ip,z,z)
+saveas(gcf, ['timeseries_ip_R_' num2str(float) '_' num2str(preslevel) '.png'])
+plot_eachbasinprof(preslevel,year,ipres,data,'d',z,ip,z,z)
+saveas(gcf, ['timeseries_ip_D_' num2str(float) '_' num2str(preslevel) '.png'])
