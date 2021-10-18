@@ -23,7 +23,6 @@ if nargin<2
    flagsel=1:3;% 1 good data, 2 probably good data, 3 probably bad data
 end
 
-%nfile=[pwd '\6901909_prof.nc'];
 
 % Open the Netcdf file:
 ncid = netcdf.open(nfile,'NC_NOWRITE');
@@ -61,6 +60,11 @@ varid = netcdf.inqVarID(ncid,'JULD');
 JULD  = netcdf.getVar(ncid,varid)';
 % and finally the absolute time axis:
 daten  = ref + JULD;
+
+% Read wmo number
+varid = netcdf.inqVarID(ncid,'PLATFORM_NUMBER');
+wmo = netcdf.getVar(ncid,varid)';
+wmo = str2num(wmo(1,:));
 
 % Read profiles latitude:
 varid    = netcdf.inqVarID(ncid,'LATITUDE');
@@ -169,6 +173,7 @@ d=find(DMODE2<2); % find profiles that are not delayed mode
 dpres=pres_adj;dpres(:,d)=NaN;
 dtemp=temp_adj;dtemp(:,d)=NaN;
 dsal=sal_adj;dsal(:,d)=NaN;
+dflag(:,d)=NaN;
 % indices of valid profs in this mode
 dind=dflag;dind(dflag==0)=NaN;dind=sum(isfinite(dind),1)>0;
 
@@ -189,6 +194,7 @@ rind=rflag;rind(rflag==0)=NaN;rind=sum(isfinite(rind),1)>0;
 
 % store
 % metadata
+data.wmo=double(wmo);
 data.cycle=cycle;
 data.long=long;
 data.lat=lat;
